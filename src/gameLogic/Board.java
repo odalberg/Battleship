@@ -1,5 +1,7 @@
 package gameLogic;
 
+// http://triton.towson.edu/~schmitt/java/chess/Chessboard.java
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Hashtable;

@@ -10,7 +10,7 @@ import gameLogic.Board;
 
 public class BattleShip extends Applet {
 
-    private Graphics graph;
+    public Graphics graph;
     private Board playerBoard;
     private Board computerBoard;
     private Boolean playerTurn;
@@ -26,7 +26,9 @@ public class BattleShip extends Applet {
      */
     class RemindTask extends TimerTask {
 
-        @Override
+        /**
+         * Logic of the general gameflow Between player and Computer
+         */
         public void run() {
             if (!playerTurn) {
                 playerBoard.aISelect();
@@ -58,7 +60,11 @@ public class BattleShip extends Applet {
         timer.schedule(new RemindTask(), 1500);
     }
 
-    // Kelle kord on
+    /**
+     * This method defines whose turn it is to shoot
+     *
+     * @param b to set turn
+     */
     private void setPlayerTurn(Boolean b) {
         playerTurn = b;
         if (!playerTurn) {
@@ -66,13 +72,20 @@ public class BattleShip extends Applet {
         }
     }
 
-    //Kummal laual midagi teha saab
+    /**
+     * Change the color of the gametable when turn changes
+     */
     private void updateTurn() {
         playerBoard.setTurnColor(!playerTurn);
         computerBoard.setTurnColor(playerTurn);
     }
 
-
+    /**
+     * Logic to define player actions and handle gameover
+     *
+     * @param x coordinate of the gametable
+     * @param y coordinate of the gametable
+     */
     private void checkPlayerAction(int x, int y) {
         if (playerTurn) {
             if (computerBoard.isInBoardRect(x, y)) {
@@ -96,27 +109,28 @@ public class BattleShip extends Applet {
         return true;
     }
 
-    //Laudade loomine
+    /**
+     * Create gametables, set position they in applet,
+     */
     public void create() {
-        BoardInfo pInfo = new BoardInfo();
-        pInfo.x = 50;
-        pInfo.y = 50;
-        pInfo.boardName = "PLAYER";
-        playerBoard = new Board(pInfo);
+        BoardInfo playerInfo = new BoardInfo();
+        playerInfo.x = 50;
+        playerInfo.y = 50;
+        playerInfo.boardName = "PLAYER";
+        playerBoard = new Board(playerInfo);
         playerBoard.create(false);
 
-        BoardInfo cInfo = new BoardInfo();
-        cInfo.x = 400;
-        cInfo.y = 50;
-        cInfo.boardName = "COMPUTER";
-        computerBoard = new Board(cInfo);
+        BoardInfo computerInfo = new BoardInfo();
+        computerInfo.x = 400;
+        computerInfo.y = 50;
+        computerInfo.boardName = "COMPUTER";
+        computerBoard = new Board(computerInfo);
         computerBoard.create(true);
 
         setPlayerTurn(true);
         updateTurn();
     }
 
-    //Joonista reaalselt
     public void paint(Graphics graph) {
         this.graph = graph;
         playerBoard.paint(graph);
